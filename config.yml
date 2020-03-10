@@ -1,0 +1,16 @@
+ts_server:
+  crawl:
+    time_interval: 10000
+    buffer_size: 1000
+  data_base:
+    drvier_name: mysql
+    url: hw.yanyan.site:3306
+    user: root
+    pwd: Ca66771111
+    db: ts
+    set_max_open_conns: 10
+    set_max_idle_conns: 5
+app_server:
+  host:
+    - ip: 127.0.0.1
+      port: 90
