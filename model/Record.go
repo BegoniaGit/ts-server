@@ -12,6 +12,7 @@ type Record struct {
 	Id             string            `json:"id"`
 	StartTimeStamp int               `json:"startTimeStamp"`
 	DurationTime   int               `json:"durationTime"`
+	Error          bool              `json:"error"`
 	Name           string            `json:"name"`
 	ServerName     string            `json:"serverName"`
 	Stage          string            `json:"stage"`
