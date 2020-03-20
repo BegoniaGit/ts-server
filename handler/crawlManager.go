@@ -69,7 +69,11 @@ func (m *CrawlManager) getTraceData(hostList []config.Host) ([]model.Record, boo
 }
 
 func (m *CrawlManager) getTraceDataByHost(host config.Host) ([]model.Record, bool) {
-	url := "http://" + host.Ip + ":" + strconv.Itoa(host.Port) + "/trace"
+	url := "http://" + host.Ip + ":" + strconv.Itoa(host.Port)
+	if host.ProjectName != "" {
+		url = url + "/" + host.ProjectName
+	}
+	url = url + "/trace"
 
 	req, err := http.NewRequest("GET", url, bytes.NewBuffer([]byte{}))
 	if err != nil {

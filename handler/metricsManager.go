@@ -25,7 +25,7 @@ func (c *MetricsManager) Start() {
 func (c *MetricsManager) dealMetrics(record model.Record) {
 
 	name := strings.Split(record.Name, ".")
-	recordType := name[0]
+	recordType := strings.ToLower(name[0])
 	baseLabels := map[string]string{"serverName": record.ServerName, "stage": record.Stage, "error": strconv.FormatBool(record.Error)}
 	switch recordType {
 	case "http":

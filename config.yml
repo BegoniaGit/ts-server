@@ -4,7 +4,7 @@ ts_server:
     buffer_size: 1000
   data_base:
     drvier_name: mysql
-    url: hw.yanyan.site:3306
+    url: cdb-rxranzeo.cd.tencentcdb.com:10084
     user: root
     pwd: Ca66771111
     db: ts
@@ -14,3 +14,4 @@ app_server:
   host:
     - ip: 127.0.0.1
       port: 90
+      project_name: app-0.0.1-SNAPSHOT

@@ -31,6 +31,8 @@ func NewApiManager(mysqlStorage *dao.MysqlStorage) *ApiManager {
 func (a *ApiManager) Start() {
 	r := gin.Default()
 	r.GET("/", func(c *gin.Context) {
+		c.Header("Access-Control-Allow-Origin","*")
+		c.Header("server-name","golang http")
 		traceId := c.Query("traceId")
 		if traceId == "" {
 			c.PureJSON(200, NewRecordApiResp(-1, "Incoming parameters are incorrect", nil))

@@ -38,8 +38,9 @@ type AppServerConfig struct {
 	Hosts []Host `yaml:"host"`
 }
 type Host struct {
-	Ip   string `yaml:"ip"`
-	Port int    `yaml:"port"`
+	Ip          string `yaml:"ip"`
+	Port        int    `yaml:"port"`
+	ProjectName string `yaml:"project_name"`
 }
 
 // 全局变量

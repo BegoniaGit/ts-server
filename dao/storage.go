@@ -56,7 +56,7 @@ func (s *MysqlStorage) SaveRecord(record model.Record) bool {
 		return false
 	}
 
-	rows, err2 := s.Db.Query("INSERT INTO record(id,trace_id,parent_id,json_text) VALUES (?,?,?,?)", record.Id, record.TraceId, record.ParentId, string(jsonTextByte))
+	rows, err2 := s.Db.Query("INSERT INTO record(id,trace_id,parent_id,start_at,json_text) VALUES (?,?,?,?,?)", record.Id, record.TraceId, record.ParentId, record.StartTimeStamp, string(jsonTextByte))
 	defer rows.Close()
 	if err2 != nil {
 		log.Println("database: save record failure,id: " + record.Id)
@@ -77,18 +77,15 @@ func (s *MysqlStorage) getDataSourceName() string {
 }
 
 func (s *MysqlStorage) GetRecordByTraceId(traceId string) ([]model.Record, bool) {
-	rows, err := s.Db.Query("SELECT * FROM record WHERE trace_id = ?", traceId)
+	rows, err := s.Db.Query("SELECT json_text FROM record WHERE trace_id = ? ORDER BY start_at ASC", traceId)
 	if err != nil {
 		log.Println("database: get record error," + err.Error())
 		return nil, false
 	}
 	var recordResultSet []model.Record
 	for rows.Next() {
-		var id string
-		var traceId string
-		var parentId string
 		var jsonText string
-		err = rows.Scan(&id, &traceId, &parentId, &jsonText)
+		err = rows.Scan(&jsonText)
 		if err != nil {
 			log.Println("database: prase return data error," + err.Error())
 			return nil, false

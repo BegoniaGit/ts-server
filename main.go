@@ -41,7 +41,8 @@ func main() {
 	go apiManager.Start()
 	go metricsManager.Start()
 	// Register prometheus api according port in 57
-	go http.ListenAndServe(":57", promhttp.Handler())
+	http.Handle("/metrics", promhttp.Handler())
+	go http.ListenAndServe(":57", nil)
 	log.Println("http listen: prometheus metrics api has started")
 	mysqlStorage.Start()
 }
