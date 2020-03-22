@@ -14,6 +14,8 @@ import (
 )
 
 func main() {
+	const version = "3.22.12.00"
+	log.Println("VERSION TIMESTAMP: " + version)
 
 	// Register prometheus metrics
 	for _, c := range model.Metrics {
@@ -35,7 +37,7 @@ func main() {
 	metricsManager := handler.NewMetricsManager(crawAndMetricsChan)
 
 	// Web api
-	apiManager := api.NewApiManager(mysqlStorage)
+	apiManager := api.NewApiManager(mysqlStorage, crawlManager)
 
 	go crawlManager.Start()
 	go apiManager.Start()

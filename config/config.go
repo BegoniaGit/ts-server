@@ -19,6 +19,7 @@ type TsServerConfig struct {
 	DataBase DataBase `yaml:"data_base"`
 }
 type Crawl struct {
+	Enable       bool  `yaml:"enable"`
 	TimeInterval int64 `yaml:"time_interval"`
 	BufferSize   int64 `yaml:"buffer_size"`
 }

@@ -29,6 +29,10 @@ func NewCrawlManager(crawAndStorageChan chan model.Record, crawAndMetricsChan ch
 }
 
 func (m *CrawlManager) Start() {
+	if config.GetConf().TsServerConfig.Crawl.Enable == false {
+		log.Println("crawl record: enable set false,so not start")
+		return
+	}
 	log.Println("crawl record: start crawl data")
 	tick := time.NewTicker(5 * time.Second)
 	defer tick.Stop()
@@ -52,6 +56,15 @@ func (m *CrawlManager) crawlData() {
 	} else {
 
 	}
+}
+
+func (m *CrawlManager) SaveData(records ...model.Record) {
+
+	for _, v := range records {
+		m.CrawAndStorageChan <- v
+		m.CrawAndMetricsChan <- v
+	}
+	log.Println("Reporting record processing: " + strconv.Itoa(len(records)) + " records")
 }
 
 func (m *CrawlManager) getTraceData(hostList []config.Host) ([]model.Record, bool) {
