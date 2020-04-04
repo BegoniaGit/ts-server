@@ -1,6 +1,6 @@
 ts_server:
   crawl:
-    enable: false
+    enable: true
     time_interval: 10000
     buffer_size: 1000
   data_base:
@@ -14,5 +14,4 @@ ts_server:
 app_server:
   host:
     - ip: 127.0.0.1
-      port: 90
-      project_name: app-0.0.1-SNAPSHOT
+      port: 8080

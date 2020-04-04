@@ -9,6 +9,7 @@ type TraceReceive struct {
 type Record struct {
 	TraceId        string            `json:"traceId"`
 	ParentId       string            `json:"parentId"`
+	LastId         string            `json:"lastId"`
 	Id             string            `json:"id"`
 	StartTimeStamp int               `json:"startTimeStamp"`
 	DurationTime   int               `json:"durationTime"`
