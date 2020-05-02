@@ -112,7 +112,7 @@
     </div>
     <footer class="row clearfix" id="footer">
         <div class="col-md-12 column">
-            <strong>@Copyright © 2020, Trace System at yanyan.site「言言」 西南科技大学 计算机科学与技术学院. All rights reserved.</strong>
+            <strong>Copyright © 2020, Trace System at yanyan.site 西南科技大学 计算机科学与技术学院. All rights reserved.</strong>
         </div>
     </footer>
 </div>
@@ -181,7 +181,7 @@
                         value: ''
                     }, {
                         title: 'Start',
-                        value: dateFormat(format, point.start)
+                        value: dateFormat(format, point.startStamp)
                     }, {
                         title: 'End',
                         value: dateFormat(format, point.endStamp)
@@ -242,7 +242,12 @@
                     let bar_data = new Array(),
                         lastRecord = null,
                         startMin = 0X20000000000000,
-                        endMax = 0X0;
+                        endMax = 0X0,
+                        recordMap = new Map();
+                    for (let i = 0; i < res_data.length; i++) {
+                        const record = res_data[i];
+                        recordMap.set(record.id, record.notePair[1].timeStamp)
+                    }
                     for (let i = 0; i < res_data.length; i++) {
                         const record = res_data[i],
                             durationTime = record.durationTime,
@@ -257,6 +262,8 @@
                             dependency = record.lastId,
                             additionalPair = record.additionalPair,
                             notePair = record.notePair,
+                            lastEnd = recordMap.get(dependency),
+                            v_start = start,//lastEnd == undefined ? start : lastEnd + (start - lastEnd) / 10,
                             v_end = durationTime < MIN_LEN ? (start + MIN_LEN) : end;
                         lastRecord = record;
                         startMin = start < startMin ? start : startMin;
@@ -273,9 +280,10 @@
                             id: id,
                             parent: parent,
                             dependency: dependency,
-                            start: start,
+                            start: v_start,
                             end: v_end,
                             color: color,
+                            startStamp: start,
                             endStamp: end,
                             durationTime: durationTime,
                             error: error,
