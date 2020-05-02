@@ -55,7 +55,6 @@ func (s *MysqlStorage) SaveRecord(record model.Record) bool {
 		log.Println("database: generate jsonText failure")
 		return false
 	}
-
 	rows, err2 := s.Db.Query("INSERT INTO record(id,trace_id,parent_id,start_at,json_text) VALUES (?,?,?,?,?)", record.Id, record.TraceId, record.ParentId, record.StartTimeStamp, string(jsonTextByte))
 	defer rows.Close()
 	if err2 != nil {

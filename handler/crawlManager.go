@@ -34,7 +34,7 @@ func (m *CrawlManager) Start() {
 		return
 	}
 	log.Println("crawl record: start crawl data")
-	tick := time.NewTicker(5 * time.Second)
+	tick := time.NewTicker(config.GetConf().TsServerConfig.Crawl.TimeInterval * time.Millisecond)
 	defer tick.Stop()
 	for {
 		select {
@@ -54,7 +54,7 @@ func (m *CrawlManager) crawlData() {
 		}
 		log.Println("crawl record: " + strconv.Itoa(len(data)) + " records")
 	} else {
-
+		log.Fatalln("crawl record: Data crawl failed")
 	}
 }
 

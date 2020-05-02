@@ -5,20 +5,20 @@ import (
 )
 
 var (
-	DefaultBucket      = []float64{1, 2, 4, 8, 16, 32, 64, 128, 512, 1024}
-	ConstantLabels     = []string{"serverName", "stage", "error"}
-	WebApiResponseCost = prometheus.NewHistogramVec(
+	DefaultBucket       = []float64{1, 2, 4, 8, 16, 32, 64, 128, 512, 1024}
+	ConstantLabels      = []string{"serverName", "stage", "error"}
+	WebHttpResponseCost = prometheus.NewHistogramVec(
 		prometheus.HistogramOpts{
-			Name:    "ts_api_seconds_bucket",
-			Help:    "web api response time in seconds",
+			Name:    "ts_http_seconds_bucket",
+			Help:    "web http response time in seconds",
 			Buckets: DefaultBucket,
 		},
 		append(ConstantLabels, "method", "path", "statusCode"),
 	)
-	WebApiResponseCount = prometheus.NewCounterVec(
+	WebHttpResponseCount = prometheus.NewCounterVec(
 		prometheus.CounterOpts{
-			Name: "ts_api_num_count",
-			Help: "web api cache result count",
+			Name: "ts_http_num_count",
+			Help: "web http cache result count",
 		},
 		append(ConstantLabels, "method", "path", "statusCode"),
 	)
@@ -53,12 +53,21 @@ var (
 		append(ConstantLabels, "method", "mysqlServer"),
 	)
 
+	SamplingRateGauge = prometheus.NewGaugeVec(
+		prometheus.GaugeOpts{
+			Name: "ts_sampling_rate",
+			Help: "ts_sampling_rate",
+		},
+		[]string{"serverName", "stage"},
+	)
+
 	Metrics = []prometheus.Collector{
-		WebApiResponseCost,
-		WebApiResponseCount,
+		WebHttpResponseCost,
+		WebHttpResponseCount,
 		HttpClientApiCost,
 		HttpClientApiCount,
 		MysqlRequestCost,
 		MysqlRequestCount,
+		SamplingRateGauge,
 	}
 )

@@ -3,6 +3,7 @@ package config
 import (
 	"github.com/winjeg/go-commons/conf"
 	"sync"
+	"time"
 )
 
 const configFile = "config.yml"
@@ -17,11 +18,12 @@ type Config struct {
 type TsServerConfig struct {
 	Crawl    Crawl    `yaml:"crawl"`
 	DataBase DataBase `yaml:"data_base"`
+	MQ       Mq       `yaml:"mq"`
 }
 type Crawl struct {
-	Enable       bool  `yaml:"enable"`
-	TimeInterval int64 `yaml:"time_interval"`
-	BufferSize   int64 `yaml:"buffer_size"`
+	Enable       bool          `yaml:"enable"`
+	TimeInterval time.Duration `yaml:"time_interval"`
+	BufferSize   int64         `yaml:"buffer_size"`
 }
 
 type DataBase struct {
@@ -32,6 +34,12 @@ type DataBase struct {
 	Db              string `yaml:"db"`
 	SetMaxOpenConns int8   `yaml:"set_max_open_conns"`
 	SetMaxIdleConns int8   `yaml:"set_max_idle_conns"`
+}
+
+type Mq struct {
+	Enable bool   `yaml:"enable"`
+	Url    string `yaml:"url"`
+	Queue  string `yaml:"queue"`
 }
 
 // 需要被抓取的应用

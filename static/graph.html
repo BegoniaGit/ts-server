@@ -120,10 +120,12 @@
     const HTTP_COLOR = '#88bc49',
         HTTP_CLIENT_COLOR = '#676fc1',
         METHOD_COLOR = '#d38129',
+        ROW_COLOR = '#d3ad49',
         MYSQL_COLOR = '#7d5598',
         ERROR_COLOR = '#a7141c',
         MIN_LEN_COLOR = '#6c90c2',
-        TITLE_STYLE = 'font-weight: bold;',
+        OTHER_COLOR = '#020003'
+    TITLE_STYLE = 'font-weight: bold;',
         DETAIL_STYLE = 'font-size: 0.8em;',
         MIN_LEN = 0X0,
         dateFormat = Highcharts.dateFormat,
@@ -134,6 +136,7 @@
     $('#legend-mysql').css('background-color', MYSQL_COLOR)
     $('#legend-client').css('background-color', HTTP_CLIENT_COLOR)
     $('#legend-local').css('background-color', METHOD_COLOR)
+    $('#legend-row').css('background-color', ROW_COLOR)
     $('#legend-cover').css('background-color', MIN_LEN_COLOR)
 
     function toHtml(k, v, style) {
@@ -262,7 +265,9 @@
                         const color = error ? ERROR_COLOR : ((durationTime < 5) ? MIN_LEN_COLOR : (
                             name.startsWith("http") ? HTTP_COLOR :
                                 (name.startsWith('client') ? HTTP_CLIENT_COLOR :
-                                    (name.startsWith('method') ? METHOD_COLOR : MYSQL_COLOR))));
+                                    (name.startsWith('method') ? METHOD_COLOR :
+                                        (name.startsWith('mysql') ? MYSQL_COLOR :
+                                            (name.startsWith('row') ? ROW_COLOR : OTHER_COLOR))))));
                         bar_data.push({
                             name: name,
                             id: id,

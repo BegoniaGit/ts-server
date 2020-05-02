@@ -12,7 +12,7 @@ type MetricsManager struct {
 }
 
 func NewMetricsManager(crawAndMetricsChan chan model.Record) *MetricsManager {
-	return &MetricsManager{CrawAndMetricsChan: crawAndMetricsChan,}
+	return &MetricsManager{CrawAndMetricsChan: crawAndMetricsChan}
 }
 
 func (c *MetricsManager) Start() {
@@ -33,8 +33,8 @@ func (c *MetricsManager) dealMetrics(record model.Record) {
 			baseLabels["method"] = name[1]
 			baseLabels["path"] = record.AdditionalPair["path"]
 			baseLabels["statusCode"] = record.AdditionalPair["status code"]
-			model.WebApiResponseCount.With(baseLabels).Inc()
-			model.WebApiResponseCost.With(baseLabels).Observe(float64(record.DurationTime))
+			model.WebHttpResponseCount.With(baseLabels).Inc()
+			model.WebHttpResponseCost.With(baseLabels).Observe(float64(record.DurationTime))
 			log.Println("metrics data: add a record to metrics,type: http,id: " + record.Id)
 			break
 		}
@@ -59,4 +59,6 @@ func (c *MetricsManager) dealMetrics(record model.Record) {
 			break
 		}
 	}
+	model.SamplingRateGauge.With(baseLabels).Set(float64(record.SamplingRate))
+	log.Println("metrics data: add a record to metrics,type: SamplingRateGauge,id: " + record.Id)
 }

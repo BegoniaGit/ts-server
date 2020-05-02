@@ -36,12 +36,16 @@ func main() {
 	// metrics
 	metricsManager := handler.NewMetricsManager(crawAndMetricsChan)
 
+	// MQ
+	receiveMq := handler.NewReceiveMQ(mysqlStorage, crawlManager)
+
 	// Web api
 	apiManager := api.NewApiManager(mysqlStorage, crawlManager)
 
 	go crawlManager.Start()
 	go apiManager.Start()
 	go metricsManager.Start()
+	go receiveMq.Start()
 	// Register prometheus api according port in 57
 	http.Handle("/metrics", promhttp.Handler())
 	go http.ListenAndServe(":57", nil)
