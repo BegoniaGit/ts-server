@@ -59,6 +59,6 @@ func (c *MetricsManager) dealMetrics(record model.Record) {
 			break
 		}
 	}
-	model.SamplingRateGauge.With(baseLabels).Set(float64(record.SamplingRate))
+	model.SamplingRateGauge.With(map[string]string{"serverName": record.ServerName, "stage": record.Stage}).Set(float64(record.SamplingRate))
 	log.Println("metrics data: add a record to metrics,type: SamplingRateGauge,id: " + record.Id)
 }

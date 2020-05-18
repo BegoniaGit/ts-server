@@ -17,7 +17,7 @@ type Record struct {
 	Name           string            `json:"name"`
 	ServerName     string            `json:"serverName"`
 	Stage          string            `json:"stage"`
-	SamplingRate   float32            `json:"samplingRate"`
+	SamplingRate   float32           `json:"samplingRate"`
 	NotePair       []NotePair        `json:"notePair"`
 	AdditionalPair map[string]string `json:"additionalPair"`
 }

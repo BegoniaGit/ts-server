@@ -12,9 +12,9 @@ ts_server:
     set_max_open_conns: 10
     set_max_idle_conns: 5
   mq:
-    enable: false
-    url: amqp://root:root@aliyun.yanyan.site:5672
-    queue: trace-data=queue
+    enable: true
+    url: amqp://guest:guest@aliyun.yanyan.site:5672
+    queue: trace-data-queue
 app_server:
   host:
     - ip: 127.0.0.1
